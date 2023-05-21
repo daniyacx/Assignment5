@@ -1,10 +1,10 @@
-
+import java.util.*;
 public class BST<K extends Comparable<K>,V> {
     private Node root;
     private int size = 1;
-    private class Node {
-        private K key;
-        private V val;
+    public class Node {
+        public K key;
+        public V val;
         private Node left, right;
 
         public Node(K key, V val) {
@@ -77,5 +77,20 @@ public class BST<K extends Comparable<K>,V> {
             return node;
         }
         return findMin(node.left);
+    }
+    public Iterable<Node> iterator() {
+        ArrayList<Node> nodeList = new ArrayList<>();
+        inOrderTraversal(nodeList, root);
+        return nodeList;
+    }
+
+    private void inOrderTraversal(ArrayList<Node> list, Node node) {
+        if (node == null) {
+            return;
+        }
+
+        inOrderTraversal(list, node.left);
+        list.add(node);
+        inOrderTraversal(list, node.right);
     }
 }
