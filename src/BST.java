@@ -28,6 +28,22 @@ public class BST<K extends Comparable<K>,V> {
         return currentNode;
     }
     public V get(K key) {
+        Node foundNode = searchNode(root, key);
+        if (foundNode == null) {
+            return null;
+        } else {
+            return foundNode.val;
+        }
+    }
+    private Node searchNode(Node current, K key) {
+        if (current == null || key.equals(current.key)) {
+            return current;
+        }
+        if (key.compareTo(current.key) < 0) {
+            return searchNode(current.left, key);
+        } else {
+            return searchNode(current.right, key);
+        }
     }
     public void delete(K key) {
     }
