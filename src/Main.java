@@ -10,12 +10,14 @@ public class Main {
             bst.put(4, "Han Jisung");
             bst.put(6, "Jeongin");
             bst.put(8, "Seungmin");
+            bst.put(1, "Stray Kids");
 
             System.out.println(bst.get(5));
             System.out.println(bst.get(2));
             System.out.println(bst.get(8));
-            System.out.println(bst.get(1));
-
+            System.out.println(bst.get(0));
+            System.out.println(bst.consistValue("Stray Kids"));
+            System.out.println(bst.consistValue("I love java"));
             bst.delete(3);
             bst.delete(7);
 

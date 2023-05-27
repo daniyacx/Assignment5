@@ -2,6 +2,7 @@ import java.util.*;
 public class BST<K extends Comparable<K>,V> {
     private Node root;
     private int size = 1;
+
     public class Node {
         public K key;
         public V val;
@@ -12,21 +13,23 @@ public class BST<K extends Comparable<K>,V> {
             this.val = val;
         }
     }
+
     /**
-     @put() inserts a new node with the specified key and value into the binary search tree
-     if the key already exists, the value associated with the key is updated
-     @param key   the key of the node to be inserted
-     @param value the value associated with the key
+     * @param key   the key of the node to be inserted
+     * @param value the value associated with the key
+     * @put() inserts a new node with the specified key and value into the binary search tree
+     * if the key already exists, the value associated with the key is updated
      */
     public void put(K key, V value) {
         root = insertNode(root, key, value);
     }
+
     /**
-     @insertNode recursive helper method to insert a node into the binary search tree
-     @param currentNode the current node being examined
-     @param key         the key of the node to be inserted
-     @param value       the value associated with the key
-     @return the modified current node after insertion
+     * @param currentNode the current node being examined
+     * @param key         the key of the node to be inserted
+     * @param value       the value associated with the key
+     * @return the modified current node after insertion
+     * @insertNode recursive helper method to insert a node into the binary search tree
      */
     // recursive helper method to insert a node into the bst
     private Node insertNode(Node currentNode, K key, V value) {
@@ -41,11 +44,12 @@ public class BST<K extends Comparable<K>,V> {
         }
         return currentNode;
     }
+
     /**
-     @get() retrieves the value associated with the specified key from the binary search tree
-     if the key is not found, null is returned
-     @param key the key to search for
-     @return the value associated with the key, or null if the key is not found
+     * @param key the key to search for
+     * @return the value associated with the key, or null if the key is not found
+     * @get() retrieves the value associated with the specified key from the binary search tree
+     * if the key is not found, null is returned
      */
     public V get(K key) {
         Node foundNode = searchNode(root, key);
@@ -55,6 +59,7 @@ public class BST<K extends Comparable<K>,V> {
             return foundNode.val; // return the value associated with the key
         }
     }
+
     // recursive helper method to search for a node with the given key in the bst
     private Node searchNode(Node current, K key) {
         if (current == null || key.equals(current.key)) {
@@ -66,9 +71,11 @@ public class BST<K extends Comparable<K>,V> {
             return searchNode(current.right, key); // traverse to the right subtree
         }
     }
+
     public void delete(K key) {
         root = deleteNode(root, key);
     }
+
     // recursive helper method to delete a node with the given key from the bst
     private Node deleteNode(Node current, K key) {
         if (current == null) {
@@ -96,6 +103,7 @@ public class BST<K extends Comparable<K>,V> {
         }
         return current;
     }
+
     // helper method to find the minimum node in a given subtree
     private Node findMin(Node node) {
         if (node.left == null) {
@@ -103,8 +111,10 @@ public class BST<K extends Comparable<K>,V> {
         }
         return findMin(node.left); // recursively search for the minimum node in the left subtree
     }
+
     /**
      * returns an iterator that iterates over the nodes of the binary search tree in in-order traversal
+     *
      * @return an iterator over the nodes of the binary search tree
      */
     public Iterable<Node> iterator() {
@@ -112,6 +122,7 @@ public class BST<K extends Comparable<K>,V> {
         inOrderTraversal(nodeList, root);
         return nodeList;
     }
+
     // helper method to perform in-order traversal of the bst and populate the list
     private void inOrderTraversal(ArrayList<Node> list, Node node) {
         if (node == null) {
@@ -121,5 +132,23 @@ public class BST<K extends Comparable<K>,V> {
         inOrderTraversal(list, node.left); // recursively traverse the left subtree
         list.add(node); // add the current node to the list
         inOrderTraversal(list, node.right); // recursively traverse the right subtree
+    }
+
+    public boolean consistValue(V value) {
+        return checkValue(root, value);
+    }
+
+    private boolean checkValue(Node node, V value) {
+        if (node == null) {
+            return false;
+        }
+
+        if (node.val.equals(value)) {
+            return true;
+        }
+
+        boolean leftContainsValue = checkValue(node.left, value);
+        boolean rightContainsValue = checkValue(node.right, value);
+        return leftContainsValue || rightContainsValue;
     }
 }
